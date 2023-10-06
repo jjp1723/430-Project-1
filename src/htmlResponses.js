@@ -4,12 +4,15 @@ const fs = require('fs');
 const client = fs.readFileSync(`${__dirname}/../client/client.html`);
 const css = fs.readFileSync(`${__dirname}/../client/style.css`);
 
-// getClient Method - Returns any requests to 'client.html'
-const getClient = (request, response) => {
-  response.writeHead(200, { 'Content-Type': 'text/html' });
-  response.write(client);
+// getPage Method - Returns requests to individual pages
+const getPage = (request, response, page) => {
+  response.writeHead(200, {'Content-Type':'text/html'});
+  response.write(page);
   response.end();
-};
+}
+
+// getClient Method - Returns any requests to 'client.html'
+const getClient = (request, response) => getPage(request, response, client);
 
 // getCSS Method - Returns any requests to 'style.css'
 const getCSS = (request, response) => {

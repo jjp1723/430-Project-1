@@ -46,7 +46,6 @@
         }else{
           let jsonString = JSON.stringify(object.users);
           content.innerHTML += `<p>${jsonString}</p>`;
-          content.innerHTML += `<img src="${JSON.stringify(object.message.image)}" alt="Tank">`;
         }
       } else if(response.status === 201 || response.status === 400){
         let object = await response.json();
@@ -145,63 +144,11 @@
             <a id="documentation" class="navbar-item is-hoverable" href="documentation.html">
                 Documentation
             </a>
-        </div>
+        </div> <!-- end navbar-start -->
     </div>
 </nav>
-  <section id="top" class="section">
-    <h3>Tank Collection Manager</h3>
-    <form id="nameForm" action="/addTank" method="post" class="container p-2 has-background-info">
-      <div class="columns">
-        <div class="column has-background-light m-1">
-          <label for="name">Name: </label>
-          <input id="nameField" type="text" name="name" />
-        </div>
-        
-        <div class="column has-background-light m-1">
-          <label for="nation">Nation: </label>
-          <input id="nationField" type="text" name="nation" />
-        </div>
-        
-        <div class="column has-background-light m-1">
-          <label for="year">Year Designed: </label>
-          <input id="yearField" type="number" name="year" min="1900" max="2023" step="1"/>
-        </div>
-        
-        <div class="column has-background-light m-1">
-          <label for="produced"># Produced: </label>
-          <input id="prodField" type="number" name="produced" min="0" max="500000" step="1"/>
-        </div>
-      </div>
-
-      <div class="columns">
-        <div class="column has-background-light m-1">
-          <label for="description">Custom Description (<i>optional</i>): </label>
-          <input id="descField" type="text" name="description" />
-        </div>
-        
-        <div class="column has-background-light m-1">
-          <label for="image">Image URL (<i>optional</i>): </label>
-          <input id="imageField" type="text" name="image" />
-        </div>
-      </div>
-
-      <div class="container">
-        <input type="submit" value="Add Tank" />
-      </div>
-    </form>
-    <form id="userForm" action="/getTanks" method="get">
-      <select id='urlField'>
-        <option value='/getTanks'>/getTanks</option>
-        <option value='/notReal'>/notReal</option>
-      </select>
-      <select id="methodSelect">
-        <option value="get">GET</option>
-        <option value="head">HEAD</option>
-      </select>
-      <input type="submit" value="Get User" />
-    </form>
-  </section>
-  <section id="content">
+  <section id="top">
+    <h3>Collection</h3>
   </section>
 </body>
 </html>
