@@ -46,7 +46,10 @@
         }else{
           let jsonString = JSON.stringify(object.users);
           content.innerHTML += `<p>${jsonString}</p>`;
-          content.innerHTML += `<img src="${JSON.stringify(object.message.image)}" alt="Tank">`;
+          for(let tank in object.users)
+          {
+            content.innerHTML += `<img src="${object.users[tank].image}" alt="Tank">`;
+          }
         }
       } else if(response.status === 201 || response.status === 400){
         let object = await response.json();
@@ -81,38 +84,17 @@
       handleResponse(response);
     };
 
-    // requestUpdate Method - Handles getting content from server (GET and HEAD)
-    const requestUpdate = async (userForm) => {
-      const urlField = userForm.querySelector('#urlField').value;
-      const methodSelect = userForm.querySelector('#methodSelect').value;
-
-      let response = await fetch(urlField, {
-        method:methodSelect,
-        headers: {'Accept':'application.json'},
-      });
-
-      handleResponse(response, methodSelect === 'get');
-    }
-
     // init Method - Adds events to page buttons upon page loading
     const init = () => {
       const nameForm = document.getElementById('nameForm');
-      const userForm = document.getElementById('userForm');
 
-      const addUser = (e) => {
+      const addTank = (e) => {
         e.preventDefault();
         sendPost(nameForm);
         return false;
       };
 
-      const getUsers = (e) => {
-        e.preventDefault();
-        requestUpdate(userForm);
-        return false;
-      }
-
-      nameForm.addEventListener('submit', addUser);
-      userForm.addEventListener('submit', getUsers);
+      nameForm.addEventListener('submit', addTank);
     };
 
     window.onload = init;
@@ -121,16 +103,16 @@
 <body>
   <nav class="navbar has-shadow is-white">
     <!-- logo / brand -->
-    <!-- <div class="navbar-brand">
-        <a class="navbar-item" href="home.html">
-            <img src="media/png/Star_Wars_Logo.png" alt="amiibo icon">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="client.html">
+            <img src="https://cdn-icons-png.flaticon.com/512/8206/8206245.png" alt="amiibo icon">
         </a>
         <a class="navbar-burger" id="burger">
             <span></span>
             <span></span>
             <span></span>
         </a>
-    </div> -->
+    </div>
 
     <div class="navbar-menu" id="nav-links">
         <div id="nav-bar" class="navbar-start">
@@ -189,19 +171,8 @@
         <input type="submit" value="Add Tank" />
       </div>
     </form>
-    <form id="userForm" action="/getTanks" method="get">
-      <select id='urlField'>
-        <option value='/getTanks'>/getTanks</option>
-        <option value='/notReal'>/notReal</option>
-      </select>
-      <select id="methodSelect">
-        <option value="get">GET</option>
-        <option value="head">HEAD</option>
-      </select>
-      <input type="submit" value="Get User" />
-    </form>
   </section>
-  <section id="content">
-  </section>
+
+  <section id="content"></section>
 </body>
 </html>

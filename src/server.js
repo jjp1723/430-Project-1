@@ -44,6 +44,9 @@ const handlePost = (request, response, parsedURL) => {
 const urlStruct = {
   GET: {
     '/': htmlHandler.getClient,
+    '/client.html': htmlHandler.getClient,
+    '/collection.html': htmlHandler.getCollection,
+    '/documentation.html': htmlHandler.getDocumentation,
     '/style.css': htmlHandler.getCSS,
     '/getTanks': jsonHandler.getTanks,
     '/notReal': jsonHandler.notFound,
