@@ -53,7 +53,7 @@ const urlStruct = {
     notFound: jsonHandler.notFound,
   },
   HEAD: {
-    '/getTanks': jsonHandler.getUsersMeta,
+    '/getTanks': jsonHandler.getTanksMeta,
     '/notReal': jsonHandler.notFoundMeta,
     notFound: jsonHandler.notFoundMeta,
   },

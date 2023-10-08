@@ -69,7 +69,7 @@ const getTanks = (request, response) => {
 };
 
 // getUsersMeta Method - Returns a status code 200 for a HEAD request
-const getUsersMeta = (request, response) => respondJSONMeta(request, response, 200);
+const getTanksMeta = (request, response) => respondJSONMeta(request, response, 200);
 
 // notFound Method - Returns a message and status code 404 for a GET request
 const notFound = (request, response) => {
@@ -85,7 +85,7 @@ const notFoundMeta = (request, response) => respondJSONMeta(request, response, 4
 module.exports = {
   addTank,
   getTanks,
-  getUsersMeta,
+  getTanksMeta,
   notFound,
   notFoundMeta,
 };
