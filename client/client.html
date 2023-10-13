@@ -84,6 +84,12 @@
       handleResponse(response);
     };
 
+    const loadBurger = () => {
+      const burgerIcon = document.getElementById('burger');
+      const navbarMenu = document.getElementById('nav-links');
+      burgerIcon.addEventListener('click', () => { navbarMenu.classList.toggle('is-active') });
+    };
+
     // init Method - Adds events to page buttons upon page loading
     const init = () => {
       const nameForm = document.getElementById('nameForm');
@@ -95,6 +101,8 @@
       };
 
       nameForm.addEventListener('submit', addTank);
+
+      loadBurger();
     };
 
     window.onload = init;
@@ -102,10 +110,9 @@
 </head>
 <body>
   <nav class="navbar has-shadow is-white">
-    <!-- logo / brand -->
     <div class="navbar-brand">
         <a class="navbar-item" href="client.html">
-            <img src="https://cdn-icons-png.flaticon.com/512/8206/8206245.png" alt="amiibo icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/8206/8206245.png" alt="tank icon">
         </a>
         <a class="navbar-burger" id="burger">
             <span></span>
@@ -129,11 +136,26 @@
             </a>
         </div>
     </div>
-</nav>
-  <section id="top" class="section">
-    <h3>Tank Collection Manager</h3>
-    <form id="nameForm" action="/addTank" method="post" class="container p-2 has-background-info">
-      <div class="columns">
+  </nav>
+  
+  <section id="top" class="section has-background-success-dark">
+    <div class="columns is-vcentered has-background-warning-dark">
+      <div class="column">
+        <div class="image">
+          <img src="https://media.istockphoto.com/id/458804963/photo/leopard-1v-tank.jpg?s=1024x1024&w=is&k=20&c=J9sP8MLlmFvleXHm1rwcXYdt1l2y4ZBIVgo8t60f50w=" alt="tank icon">
+        </div>
+      </div>
+      <div class="column has-text-centered">
+        <h1>Tank Collection Manager</h3>
+      </div>
+      <div class="column">
+        <div class="image">
+          <img src="https://media.istockphoto.com/id/121143704/photo/t-90s-main-battle-tank.jpg?s=1024x1024&w=is&k=20&c=dVBrAOsokGrxdVYUxNN9k51lWDWjL2JDXj4Kz9dFqGI=" alt="tank icon">
+        </div>
+      </div>
+    </div>
+    <form id="nameForm" action="/addTank" method="post" class="container p-2 has-background-warning-light">
+      <div class="columns p-2 is-vcentered">
         <div class="column has-background-light m-1">
           <label for="name">Name: </label>
           <input id="nameField" type="text" name="name" />
@@ -155,7 +177,7 @@
         </div>
       </div>
 
-      <div class="columns">
+      <div class="columns p-2 is-vcentered">
         <div class="column has-background-light m-1">
           <label for="description">Custom Description (<i>optional</i>): </label>
           <input id="descField" type="text" name="description" />
