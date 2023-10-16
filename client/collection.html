@@ -11,7 +11,7 @@
     const sortTankList = (method) => {
       switch(method){
         case 'name':
-          tankList.sort();
+          tankList.sort((a, b) => (a.name > b.name) ? 1 : -1);
           break;
 
         case 'nation':
@@ -78,7 +78,7 @@
         //   tankList.push(tank)
         // }
         let tankString = JSON.stringify(object.users);
-        tankList = Object.value(JSON.parse(tankString));
+        tankList = Object.values(JSON.parse(tankString));
 
         sortTankList(document.getElementById('sortField').value);
 
@@ -87,19 +87,19 @@
              <div class="card has-text-centered">
               <div class="card-image">
                 <figure class="image p-3 is-inline-block">
-                  <img src="${object.users[tank].image}" alt="Tank">
+                  <img src="${tank.image}" alt="Tank">
                 </figure>
               </div>
               <div class="content is-size-6 pb-3">
-                Tank: ${object.users[tank].name}
+                Tank: ${tank.name}
                 <br>
-                Nation: ${object.users[tank].nation}
+                Nation: ${tank.nation}
                 <br>
-                Year Designed: ${object.users[tank].year}
+                Year Designed: ${tank.year}
                 <br>
-                # Produced: ${object.users[tank].produced}
+                # Produced: ${tank.produced}
                 <br>
-                Description: ${object.users[tank].description}
+                Description: ${tank.description}
               </div>
             </div>
           `;
