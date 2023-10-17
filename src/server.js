@@ -47,7 +47,6 @@ const urlStruct = {
     '/client.html': htmlHandler.getClient,
     '/collection.html': htmlHandler.getCollection,
     '/documentation.html': htmlHandler.getDocumentation,
-    '/style.css': htmlHandler.getCSS,
     '/getTanks': jsonHandler.getTanks,
     '/notReal': jsonHandler.notFound,
     notFound: jsonHandler.notFound,

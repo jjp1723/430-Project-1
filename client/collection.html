@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <title>Our simple HTTP server</title>
-  <!-- <link rel="stylesheet" type="text/css" href="/style.css"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   
   <script>
@@ -73,14 +72,12 @@
         let jsonString = JSON.stringify(object.message);
         content.innerHTML += `<p>Message: ${jsonString}</p>`;
       }else{
-        // for(let tank in object.users)
-        // {
-        //   tankList.push(tank)
-        // }
         let tankString = JSON.stringify(object.users);
         tankList = Object.values(JSON.parse(tankString));
 
         sortTankList(document.getElementById('sortField').value);
+
+        content.innerHTML += `<p>Displaying ${tankList.length} Tanks</p>`;
 
         tankList.forEach(tank => {
           content.innerHTML += `
@@ -91,15 +88,21 @@
                 </figure>
               </div>
               <div class="content is-size-6 pb-3">
-                Tank: ${tank.name}
-                <br>
-                Nation: ${tank.nation}
-                <br>
-                Year Designed: ${tank.year}
-                <br>
-                # Produced: ${tank.produced}
-                <br>
-                Description: ${tank.description}
+                <div class="columns">
+                  <div class="column"></div>
+                  <div class="column has-text-left p-2">
+                    <b>Tank</b>: ${tank.name}
+                    <br>
+                    <b>Nation</b>: ${tank.nation}
+                    <br>
+                    <b>Year Designed</b>: ${tank.year}
+                    <br>
+                    <b># Produced</b>: ${tank.produced}
+                    <br>
+                    <b>Description</b>: ${tank.description}
+                  </div>
+                  <div class="column"></div>
+                </div>
               </div>
             </div>
           `;
@@ -128,6 +131,7 @@
     // init Method - Adds events to page buttons upon page loading
     const init = () => {
       const userForm = document.getElementById('userForm');
+      const getButton = document.getElementById('getButton');
 
       const getTanks = (e) => {
         e.preventDefault();
@@ -135,7 +139,7 @@
         return false;
       }
       
-      userForm.addEventListener('submit', getTanks);
+      getButton.addEventListener('click', getTanks);
 
       loadBurger();
     };
@@ -159,11 +163,11 @@
     <div class="navbar-menu" id="nav-links">
         <div id="nav-bar" class="navbar-start">
             <a id="home" class="navbar-item is-hoverable" href="client.html">
-                Page 1
+                Add Tanks
             </a>
         
             <a id="collection" class="navbar-item is-hoverable" href="collection.html">
-                Page 2
+                View Collection
             </a>
         
             <a id="documentation" class="navbar-item is-hoverable" href="documentation.html">
@@ -173,10 +177,23 @@
     </div>
 </nav>
   <section id="top" class="section has-background-success-dark">
-    <div class="has-text-centered is-vcentered has-background-warning-light">
-      <h3>Tank Collection Manager</h3>
-      <form id="userForm" action="/getTanks" method="get">
-        
+    <div class="columns is-vcentered has-background-warning-dark">
+      <div class="column">
+        <div class="image">
+          <img src="https://media.istockphoto.com/id/458804963/photo/leopard-1v-tank.jpg?s=1024x1024&w=is&k=20&c=J9sP8MLlmFvleXHm1rwcXYdt1l2y4ZBIVgo8t60f50w=" alt="tank icon">
+        </div>
+      </div>
+      <div class="column has-text-centered has-background-warning-light title m-2">
+        Tank Collection Manager
+      </div>
+      <div class="column">
+        <div class="image">
+          <img src="https://media.istockphoto.com/id/121143704/photo/t-90s-main-battle-tank.jpg?s=1024x1024&w=is&k=20&c=dVBrAOsokGrxdVYUxNN9k51lWDWjL2JDXj4Kz9dFqGI=" alt="tank icon">
+        </div>
+      </div>
+    </div>
+    <div class="has-text-centered is-vcentered has-background-warning-light p-2">
+      <form id="userForm" action="/getTanks" method="get" class="has-text-centered is-vcentered has-background-light m-4 p-2 subtitle">
         <label for="sortField">Sort tanks by: </label>
         <select id='sortField' name="sortField">
           <option value='name'>Name</option>
@@ -184,11 +201,12 @@
           <option value='year'>Year Designed</option>
           <option value='produced'>Number Produced</option>
         </select>
-        <input type="submit" value="Get Tanks" />
       </form>
+      <button class="button" id="getButton">
+        Get Tanks
+      </button>
+      <div class="p-4" id="content"></div>
     </div>
-  </section>
-  <section id="content">
   </section>
 </body>
 </html>

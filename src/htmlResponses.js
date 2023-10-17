@@ -4,7 +4,6 @@ const fs = require('fs');
 const client = fs.readFileSync(`${__dirname}/../client/client.html`);
 const collection = fs.readFileSync(`${__dirname}/../client/collection.html`);
 const documentation = fs.readFileSync(`${__dirname}/../client/documentation.html`);
-const css = fs.readFileSync(`${__dirname}/../client/style.css`);
 
 // getPage Method - Returns requests to individual pages
 const getPage = (request, response, page) => {
@@ -22,17 +21,9 @@ const getCollection = (request, response) => getPage(request, response, collecti
 // getCollection Method - Returns any requests to 'client.html'
 const getDocumentation = (request, response) => getPage(request, response, documentation);
 
-// getCSS Method - Returns any requests to 'style.css'
-const getCSS = (request, response) => {
-  response.writeHead(200, { 'Content-Type': 'text/css' });
-  response.write(css);
-  response.end();
-};
-
 // Exporting Methods
 module.exports = {
   getClient,
   getCollection,
   getDocumentation,
-  getCSS,
 };

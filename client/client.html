@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <title>Our simple HTTP server</title>
-  <!-- <link rel="stylesheet" type="text/css" href="/style.css"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   
   <script>
@@ -93,6 +92,7 @@
     // init Method - Adds events to page buttons upon page loading
     const init = () => {
       const nameForm = document.getElementById('nameForm');
+      const addButton = document.getElementById('addButton')
 
       const addTank = (e) => {
         e.preventDefault();
@@ -100,7 +100,7 @@
         return false;
       };
 
-      nameForm.addEventListener('submit', addTank);
+      addButton.addEventListener('click', addTank);
 
       loadBurger();
     };
@@ -124,11 +124,11 @@
     <div class="navbar-menu" id="nav-links">
         <div id="nav-bar" class="navbar-start">
             <a id="home" class="navbar-item is-hoverable" href="client.html">
-                Page 1
+                Add Tanks
             </a>
         
             <a id="collection" class="navbar-item is-hoverable" href="collection.html">
-                Page 2
+                View Collection
             </a>
         
             <a id="documentation" class="navbar-item is-hoverable" href="documentation.html">
@@ -145,8 +145,8 @@
           <img src="https://media.istockphoto.com/id/458804963/photo/leopard-1v-tank.jpg?s=1024x1024&w=is&k=20&c=J9sP8MLlmFvleXHm1rwcXYdt1l2y4ZBIVgo8t60f50w=" alt="tank icon">
         </div>
       </div>
-      <div class="column has-text-centered">
-        <h1>Tank Collection Manager</h3>
+      <div class="column has-text-centered has-background-warning-light title m-2">
+        Tank Collection Manager
       </div>
       <div class="column">
         <div class="image">
@@ -154,47 +154,47 @@
         </div>
       </div>
     </div>
-    <form id="nameForm" action="/addTank" method="post" class="container p-2 has-background-warning-light">
-      <div class="columns p-2 is-vcentered">
-        <div class="column has-background-light m-1">
+    <form id="nameForm" action="/addTank" method="post" class="has-text-centered is-vcentered has-background-warning-light p-2 subtitle">
+      <div class="columns m-4 is-vcentered has-background-light">
+        <div class="column">
           <label for="name">Name: </label>
           <input id="nameField" type="text" name="name" />
         </div>
         
-        <div class="column has-background-light m-1">
+        <div class="column">
           <label for="nation">Nation: </label>
           <input id="nationField" type="text" name="nation" />
         </div>
         
-        <div class="column has-background-light m-1">
+        <div class="column">
           <label for="year">Year Designed: </label>
           <input id="yearField" type="number" name="year" min="1900" max="2023" step="1"/>
         </div>
         
-        <div class="column has-background-light m-1">
+        <div class="column">
           <label for="produced"># Produced: </label>
           <input id="prodField" type="number" name="produced" min="0" max="500000" step="1"/>
         </div>
       </div>
 
-      <div class="columns p-2 is-vcentered">
-        <div class="column has-background-light m-1">
+      <div class="columns m-4 is-vcentered has-background-light">
+        <div class="column">
           <label for="description">Custom Description (<i>optional</i>): </label>
           <input id="descField" type="text" name="description" />
         </div>
         
-        <div class="column has-background-light m-1">
+        <div class="column">
           <label for="image">Image URL (<i>optional</i>): </label>
           <input id="imageField" type="text" name="image" />
         </div>
       </div>
 
-      <div class="container">
-        <input type="submit" value="Add Tank" />
+      <div class="button" id="addButton">
+        Add Tank
       </div>
+
+      <div class="p-4" id="content"></div>
     </form>
   </section>
-
-  <section id="content"></section>
 </body>
 </html>
