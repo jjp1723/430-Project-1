@@ -12,15 +12,15 @@
       // Page content changes based on the response status code
       switch(response.status){
         case 200:
-          content.innerHTML = `<b>Success</b>`;
+          content.innerHTML = `<b>Success!</b>`;
           break;
 
         case 201:
-          content.innerHTML = `<b>Created</b>`;
+          content.innerHTML = `<b>Created Entry for ${document.getElementById('nameField').value}</b>`;
           break;
 
         case 204:
-          content.innerHTML = `<b>Updated (No Content)</b>`;
+          content.innerHTML = `<b>Updated Entry for ${document.getElementById('nameField').value}</b>`;
           break;
 
         case 400:
@@ -36,38 +36,38 @@
           break;
       }
 
-      // Additional page content depends on the request method and responding status code(s)
+      // Additional page content depends on the response received and responding status code(s)
       if(parsedResponse){
         let object = await response.json();
         if(response.status === 404){
           let jsonString = JSON.stringify(object.message);
-          content.innerHTML += `<p>Message: ${jsonString}</p>`;
+          content.innerHTML += `<p>API Message: ${jsonString}</p>`;
         }else{
-          let jsonString = JSON.stringify(object.users);
+          let jsonString = JSON.stringify(object.tanks);
           content.innerHTML += `<p>${jsonString}</p>`;
-          for(let tank in object.users)
+          for(let tank in object.tanks)
           {
-            content.innerHTML += `<img src="${object.users[tank].image}" alt="Tank">`;
+            content.innerHTML += `<img src="${object.tanks[tank].image}" alt="Tank">`;
           }
         }
       } else if(response.status === 201 || response.status === 400){
         let object = await response.json();
         let jsonString = JSON.stringify(object.message);
-        content.innerHTML += `<p>Message: ${jsonString}</p>`;
+        content.innerHTML += `<p>API Message: ${jsonString}</p>`;
       }
     };
 
     // sendPost Method - Handles posting content to the server (POST)
-    const sendPost = async (nameForm) => {
-      const nameAction = nameForm.getAttribute('action');
-      const nameMethod = nameForm.getAttribute('method');
+    const sendPost = async (tankForm) => {
+      const nameAction = tankForm.getAttribute('action');
+      const nameMethod = tankForm.getAttribute('method');
 
-      const nameField = nameForm.querySelector('#nameField');
-      const nationField = nameForm.querySelector('#nationField');
-      const yearField = nameForm.querySelector('#yearField');
-      const prodField = nameForm.querySelector('#prodField');
-      const descField = nameForm.querySelector('#descField');
-      const imageField = nameForm.querySelector('#imageField');
+      const nameField = tankForm.querySelector('#nameField');
+      const nationField = tankForm.querySelector('#nationField');
+      const yearField = tankForm.querySelector('#yearField');
+      const prodField = tankForm.querySelector('#prodField');
+      const descField = tankForm.querySelector('#descField');
+      const imageField = tankForm.querySelector('#imageField');
 
       const formData = `name=${nameField.value}&nation=${nationField.value}&year=${yearField.value}&produced=${prodField.value}&description=${descField.value}&image=${imageField.value}`;
 
@@ -89,14 +89,14 @@
       burgerIcon.addEventListener('click', () => { navbarMenu.classList.toggle('is-active') });
     };
 
-    // init Method - Adds events to page buttons upon page loading
+    // init Method - Adds events to the form and button upon page loading
     const init = () => {
-      const nameForm = document.getElementById('nameForm');
+      const tankForm = document.getElementById('tankForm');
       const addButton = document.getElementById('addButton')
 
       const addTank = (e) => {
         e.preventDefault();
-        sendPost(nameForm);
+        sendPost(tankForm);
         return false;
       };
 
@@ -109,10 +109,11 @@
   </script>
 </head>
 <body>
+  <!-- Navbar -->
   <nav class="navbar has-shadow is-white">
     <div class="navbar-brand">
         <a class="navbar-item" href="client.html">
-            <img src="https://cdn-icons-png.flaticon.com/512/8206/8206245.png" alt="tank icon">
+            <img src="tank-default.png" alt="tank icon">
         </a>
         <a class="navbar-burger" id="burger">
             <span></span>
@@ -138,11 +139,16 @@
     </div>
   </nav>
   
+
+
+  <!-- Page Content -->
+
+  <!-- Application Title with stock images -->
   <section id="top" class="section has-background-success-dark">
     <div class="columns is-vcentered has-background-warning-dark">
       <div class="column">
         <div class="image">
-          <img src="https://media.istockphoto.com/id/458804963/photo/leopard-1v-tank.jpg?s=1024x1024&w=is&k=20&c=J9sP8MLlmFvleXHm1rwcXYdt1l2y4ZBIVgo8t60f50w=" alt="tank icon">
+          <img src="tank-leopard.jpg" alt="Leopard Tank">
         </div>
       </div>
       <div class="column has-text-centered has-background-warning-light title m-2">
@@ -150,11 +156,13 @@
       </div>
       <div class="column">
         <div class="image">
-          <img src="https://media.istockphoto.com/id/121143704/photo/t-90s-main-battle-tank.jpg?s=1024x1024&w=is&k=20&c=dVBrAOsokGrxdVYUxNN9k51lWDWjL2JDXj4Kz9dFqGI=" alt="tank icon">
+          <img src="tank-t90.jpg" alt="T90 Tank">
         </div>
       </div>
     </div>
-    <form id="nameForm" action="/addTank" method="post" class="has-text-centered is-vcentered has-background-warning-light p-2 subtitle">
+
+    <!-- Tank Form - Users input information about tanks to be added to the collection -->
+    <form id="tankForm" action="/addTank" method="post" class="has-text-centered is-vcentered has-background-warning-light p-2 subtitle">
       <div class="columns m-4 is-vcentered has-background-light">
         <div class="column">
           <label for="name">Name: </label>

@@ -7,6 +7,7 @@
   <script>
     let tankList = [];
 
+    // sortTankList Method - Sorts all json object in tankList based on the given method
     const sortTankList = (method) => {
       switch(method){
         case 'name':
@@ -31,6 +32,8 @@
       }
     }
 
+    // handleResponse Method - Handles all responses from the server and
+    //  displays data to the client accordingly
     const handleResponse = async (response) => {
       // Reference to page content
       const content = document.getElementById('content');
@@ -38,7 +41,7 @@
       // Page content changes based on the response status code
       switch(response.status){
         case 200:
-          content.innerHTML = `<b>Success</b>`;
+          content.innerHTML = `<b>Success!</b>`;
           break;
 
         case 201:
@@ -66,19 +69,20 @@
       let object = await response.json();
       if(response.status === 404){
         let jsonString = JSON.stringify(object.message);
-        content.innerHTML += `<p>Message: ${jsonString}</p>`;
+        content.innerHTML += `<p>API Message: ${jsonString}</p>`;
       }else if(response.status === 201 || response.status === 400){
         let object = await response.json();
         let jsonString = JSON.stringify(object.message);
-        content.innerHTML += `<p>Message: ${jsonString}</p>`;
+        content.innerHTML += `<p>API Message: ${jsonString}</p>`;
       }else{
-        let tankString = JSON.stringify(object.users);
+        // Storing the received json in tankList and sorting the results according
+        //  to the currently selected sorting method
+        let tankString = JSON.stringify(object.tanks);
         tankList = Object.values(JSON.parse(tankString));
-
         sortTankList(document.getElementById('sortField').value);
+        content.innerHTML += `<p>Displaying ${tankList.length} Tank(s)</p>`;
 
-        content.innerHTML += `<p>Displaying ${tankList.length} Tanks</p>`;
-
+        // Creating a bulma card for each tank result and adding it to the page content
         tankList.forEach(tank => {
           content.innerHTML += `
              <div class="card has-text-centered">
@@ -110,9 +114,9 @@
       }
     };
 
-    // requestUpdate Method - Handles getting content from server (GET and HEAD)
-    const requestUpdate = async (userForm) => {
-      const sortField = userForm.querySelector('#sortField').value;
+    // requestUpdate Method - Handles getting content from server (GET)
+    const requestUpdate = async (tankForm) => {
+      const sortField = tankForm.querySelector('#sortField').value;
 
       let response = await fetch('/getTanks', {
         method:'GET',
@@ -122,6 +126,7 @@
       handleResponse(response);
     }
 
+    // loadBurger Method - Loads navigation links into the navbar burger
     const loadBurger = () => {
       const burgerIcon = document.getElementById('burger');
       const navbarMenu = document.getElementById('nav-links');
@@ -130,12 +135,12 @@
 
     // init Method - Adds events to page buttons upon page loading
     const init = () => {
-      const userForm = document.getElementById('userForm');
+      const tankForm = document.getElementById('tankForm');
       const getButton = document.getElementById('getButton');
 
       const getTanks = (e) => {
         e.preventDefault();
-        requestUpdate(userForm);
+        requestUpdate(tankForm);
         return false;
       }
       
@@ -148,10 +153,11 @@
   </script>
 </head>
 <body>
+  <!-- Navbar -->
   <nav class="navbar has-shadow is-white">
     <div class="navbar-brand">
         <a class="navbar-item" href="client.html">
-            <img src="https://cdn-icons-png.flaticon.com/512/8206/8206245.png" alt="tank icon">
+            <img src="tank-default.png" alt="tank icon">
         </a>
         <a class="navbar-burger" id="burger">
             <span></span>
@@ -175,12 +181,18 @@
             </a>
         </div>
     </div>
-</nav>
+  </nav>
+
+
+
+  <!-- Page Content -->
+
+  <!-- Application Title with stock images -->
   <section id="top" class="section has-background-success-dark">
     <div class="columns is-vcentered has-background-warning-dark">
       <div class="column">
         <div class="image">
-          <img src="https://media.istockphoto.com/id/458804963/photo/leopard-1v-tank.jpg?s=1024x1024&w=is&k=20&c=J9sP8MLlmFvleXHm1rwcXYdt1l2y4ZBIVgo8t60f50w=" alt="tank icon">
+          <img src="tank-leopard.jpg" alt="Leopard Tank">
         </div>
       </div>
       <div class="column has-text-centered has-background-warning-light title m-2">
@@ -188,12 +200,14 @@
       </div>
       <div class="column">
         <div class="image">
-          <img src="https://media.istockphoto.com/id/121143704/photo/t-90s-main-battle-tank.jpg?s=1024x1024&w=is&k=20&c=dVBrAOsokGrxdVYUxNN9k51lWDWjL2JDXj4Kz9dFqGI=" alt="tank icon">
+          <img src="tank-t90.jpg" alt="T90 Tank">
         </div>
       </div>
     </div>
+
+    <!-- Tank Form - Users request collection data which is sorted based on user's selection -->
     <div class="has-text-centered is-vcentered has-background-warning-light p-2">
-      <form id="userForm" action="/getTanks" method="get" class="has-text-centered is-vcentered has-background-light m-4 p-2 subtitle">
+      <form id="tankForm" action="/getTanks" method="get" class="has-text-centered is-vcentered has-background-light m-4 p-2 subtitle">
         <label for="sortField">Sort tanks by: </label>
         <select id='sortField' name="sortField">
           <option value='name'>Name</option>

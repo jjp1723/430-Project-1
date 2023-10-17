@@ -1,12 +1,12 @@
-// Built off of head-request and body-parse demo
+// Built off of http-api-assignment-ii
 
 const http = require('http');
 const url = require('url');
 const query = require('querystring');
 
 // Initializing handlers to import response methods
-const htmlHandler = require('./htmlResponses.js');
 const jsonHandler = require('./jsonResponses.js');
+const mediaHandler = require('./mediaResponses.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
@@ -15,7 +15,7 @@ const parseBody = (request, response, handler) => {
   const body = [];
 
   request.on('error', (err) => {
-    console.dir(err);
+    //console.dir(err);
     response.statusCode = 400;
     response.end();
   });
@@ -43,10 +43,14 @@ const handlePost = (request, response, parsedURL) => {
 //  (Attempted to put handlePost functionality within, but could get functioning properly)
 const urlStruct = {
   GET: {
-    '/': htmlHandler.getClient,
-    '/client.html': htmlHandler.getClient,
-    '/collection.html': htmlHandler.getCollection,
-    '/documentation.html': htmlHandler.getDocumentation,
+    '/': mediaHandler.getClient,
+    '/client.html': mediaHandler.getClient,
+    '/collection.html': mediaHandler.getCollection,
+    '/documentation.html': mediaHandler.getDocumentation,
+    '/tank-default.png': mediaHandler.getTankDefault,
+    '/tank-leopard.jpg': mediaHandler.getTankLeopard,
+    '/tank-t90.jpg': mediaHandler.getTankT90,
+    '/documentation.pdf': mediaHandler.getPDFDocumentation,
     '/getTanks': jsonHandler.getTanks,
     '/notReal': jsonHandler.notFound,
     notFound: jsonHandler.notFound,
@@ -62,8 +66,8 @@ const urlStruct = {
 //  response based on the requested url and the request method
 const onRequest = (request, response) => {
   const parsedURL = url.parse(request.url);
-  console.dir(request.method);
-  console.dir(request.pathname);
+  //console.dir(request.method);
+  //onsole.dir(request.pathname);
 
   if (request.method === 'POST') {
     return handlePost(request, response, parsedURL);
@@ -82,5 +86,5 @@ const onRequest = (request, response) => {
 
 // Creating the server
 http.createServer(onRequest).listen(port, () => {
-  console.dir(`Listening on 127.0.0.1:${port}`);
+  //console.dir(`Listening on 127.0.0.1:${port}`);
 });

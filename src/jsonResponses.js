@@ -47,9 +47,9 @@ const addTank = (request, response, body) => {
     tanks[body.name].description = body.description;
   }
 
-  if(!body.image){
-    tanks[body.name].image = 'https://cdn-icons-png.flaticon.com/512/8206/8206245.png';
-  }else{
+  if (!body.image) {
+    tanks[body.name].image = 'tank-default.png';
+  } else {
     tanks[body.name].image = body.image;
   }
 
@@ -61,14 +61,14 @@ const addTank = (request, response, body) => {
   return respondJSONMeta(request, response, status);
 };
 
-// getUsers Method - Returns the 'users' object and a status code 200 for a GET request
+// getTanks Method - Returns the 'tanks' object and a status code 200 for a GET request
 const getTanks = (request, response) => {
-  const jsonResponse = { users: tanks };
+  const jsonResponse = { tanks };
 
   return respondJSON(request, response, 200, jsonResponse);
 };
 
-// getUsersMeta Method - Returns a status code 200 for a HEAD request
+// getTanksMeta Method - Returns a status code 200 for a HEAD request
 const getTanksMeta = (request, response) => respondJSONMeta(request, response, 200);
 
 // notFound Method - Returns a message and status code 404 for a GET request
